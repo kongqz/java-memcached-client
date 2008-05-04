@@ -21,7 +21,8 @@ public class AsciiClientTest extends ProtocolBaseCase {
 	}
 
 	public void testBadOperation() throws Exception {
-		client.addOp("x", new ExtensibleOperationImpl(new OperationCallback(){
+		((MemcachedClientImpl)client).addOp("x",
+				new ExtensibleOperationImpl(new OperationCallback(){
 			public void complete() {
 				System.err.println("Complete.");
 			}
