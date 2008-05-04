@@ -68,7 +68,7 @@ public final class MemcachedClientImpl extends SpyThread
     private final MemcachedConnection conn;
 	final OperationFactory opFact;
 
-	Transcoder<Object> transcoder=null;
+	final Transcoder<Object> transcoder;
 
 	/**
 	 * Get a memcache client operating on the specified memcached locations.
@@ -149,16 +149,6 @@ public final class MemcachedClientImpl extends SpyThread
 			}
 		}
 		return rv;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.spy.memcached.MemcachedClientWithTranscoder#setTranscoder(net.spy.memcached.transcoders.Transcoder)
-	 */
-	public void setTranscoder(Transcoder<Object> tc) {
-		if(tc == null) {
-			throw new NullPointerException("Can't use a null transcoder");
-		}
-		transcoder=tc;
 	}
 
 	/* (non-Javadoc)
