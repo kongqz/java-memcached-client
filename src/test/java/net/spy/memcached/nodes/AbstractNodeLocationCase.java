@@ -1,9 +1,12 @@
-package net.spy.memcached;
+package net.spy.memcached.nodes;
 
 import java.util.Iterator;
 
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
+
+import net.spy.memcached.nodes.MemcachedNode;
+import net.spy.memcached.nodes.NodeLocator;
 
 public abstract class AbstractNodeLocationCase extends MockObjectTestCase {
 
