@@ -5,8 +5,7 @@ import java.util.Iterator;
 import org.jmock.Mock;
 import org.jmock.MockObjectTestCase;
 
-import net.spy.memcached.nodes.MemcachedNode;
-import net.spy.memcached.nodes.NodeLocator;
+import net.spy.memcached.util.KeyUtil;
 
 public abstract class AbstractNodeLocationCase extends MockObjectTestCase {
 
@@ -16,7 +15,8 @@ public abstract class AbstractNodeLocationCase extends MockObjectTestCase {
 
 	protected final void assertSequence(String k, int... seq) {
 		int pos=0;
-		for(Iterator<MemcachedNode> i=locator.getSequence(k); i.hasNext(); ) {
+		for(Iterator<MemcachedNode> i=locator.getSequence(s(k));
+			i.hasNext(); ) {
 			assertSame("At position " + pos, nodes[seq[pos]], i.next());
 			try {
 				i.remove();
@@ -27,6 +27,10 @@ public abstract class AbstractNodeLocationCase extends MockObjectTestCase {
 			pos++;
 		}
 		assertEquals("Incorrect sequence size for " + k, seq.length, pos);
+	}
+
+	protected byte[] s(String s) {
+		return KeyUtil.getKeyBytes(s);
 	}
 
 	protected void setupNodes(int n) {
