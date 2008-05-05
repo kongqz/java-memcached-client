@@ -17,6 +17,7 @@ import java.util.concurrent.TimeoutException;
 import net.spy.SpyObject;
 import net.spy.memcached.cas.CASResponse;
 import net.spy.memcached.cas.CASValue;
+import net.spy.memcached.io.MemcachedHighLevelIO;
 import net.spy.memcached.ops.ConcatenationType;
 import net.spy.memcached.ops.Mutator;
 import net.spy.memcached.ops.Operation;

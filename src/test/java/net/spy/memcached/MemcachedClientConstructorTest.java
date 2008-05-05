@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import net.spy.memcached.io.MemcachedLowLevelIO;
 import net.spy.memcached.ops.OperationFactory;
 import net.spy.memcached.util.AddrUtil;
 
