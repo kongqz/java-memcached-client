@@ -19,13 +19,14 @@ import net.spy.memcached.ops.StoreOperation;
 import net.spy.memcached.ops.StoreType;
 import net.spy.memcached.ops.VersionOperation;
 import net.spy.memcached.ops.GetOperation.Callback;
+import net.spy.memcached.util.KeyUtil;
 
 /**
  * Factory for binary operations.
  */
 public class BinaryOperationFactory implements OperationFactory {
 
-	public DeleteOperation delete(String key, int when,
+	public DeleteOperation delete(byte[] key, int when,
 			OperationCallback operationCallback) {
 		return new DeleteOperationImpl(key, when, operationCallback);
 	}
@@ -34,19 +35,19 @@ public class BinaryOperationFactory implements OperationFactory {
 		return new FlushOperationImpl(cb);
 	}
 
-	public GetOperation get(String key, Callback callback) {
+	public GetOperation get(byte[] key, Callback callback) {
 		return new GetOperationImpl(key, callback);
 	}
 
-	public GetOperation get(Collection<String> value, Callback cb) {
-		return new MultiGetOperationImpl(value, cb);
+	public GetOperation get(Collection<byte[]> value, Callback cb) {
+		return new MultiGetOperationImpl(KeyUtil.getKeyStrings(value), cb);
 	}
 
-	public GetsOperation gets(String key, GetsOperation.Callback cb) {
+	public GetsOperation gets(byte[] key, GetsOperation.Callback cb) {
 		return new GetOperationImpl(key, cb);
 	}
 
-	public MutatatorOperation mutate(Mutator m, String key, int by,
+	public MutatatorOperation mutate(Mutator m, byte[] key, int by,
 			long def, int exp, OperationCallback cb) {
 		return new MutatorOperationImpl(m, key, by, def, exp, cb);
 	}
@@ -56,7 +57,7 @@ public class BinaryOperationFactory implements OperationFactory {
 		throw new UnsupportedOperationException();
 	}
 
-	public StoreOperation store(StoreType storeType, String key, int flags,
+	public StoreOperation store(StoreType storeType, byte[] key, int flags,
 			int exp, byte[] data, OperationCallback cb) {
 		return new StoreOperationImpl(storeType, key, flags, exp, data, 0, cb);
 	}
@@ -69,14 +70,14 @@ public class BinaryOperationFactory implements OperationFactory {
 		return new NoopOperationImpl(cb);
 	}
 
-	public CASOperation cas(String key, long casId, int flags,
+	public CASOperation cas(byte[] key, long casId, int flags,
 			byte[] data, OperationCallback cb) {
 		return new StoreOperationImpl(StoreType.set, key, flags, 0, data,
 				casId, cb);
 	}
 
 	public ConcatenationOperation cat(ConcatenationType catType, long casId,
-			String key, byte[] data, OperationCallback cb) {
+			byte[] key, byte[] data, OperationCallback cb) {
 		return new ConcatenationOperationImpl(catType, key, data, casId, cb);
 	}
 
