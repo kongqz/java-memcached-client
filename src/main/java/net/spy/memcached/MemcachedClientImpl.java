@@ -29,7 +29,7 @@ import net.spy.memcached.util.KeyUtil;
  * Implementation of MemcachedClient.
  * @see MemcachedClient
  */
-public final class MemcachedClientImpl extends SpyObject
+public class MemcachedClientImpl extends SpyObject
 	implements MemcachedClientWithTranscoder {
 
 	private final MemcachedHighLevelIO conn;
@@ -84,13 +84,6 @@ public final class MemcachedClientImpl extends SpyObject
 		transcoder=new SerializingTranscoder();
 		conn=new MemcachedHighLevelIO(cf, addrs);
 		operationTimeout = cf.getOperationTimeout();
-	}
-
-	/* (non-Javadoc)
-	 * @see net.spy.memcached.MemcachedClientWithTranscoder#getTranscoder()
-	 */
-	public Transcoder<Object> getTranscoder() {
-		return transcoder;
 	}
 
 	/**
