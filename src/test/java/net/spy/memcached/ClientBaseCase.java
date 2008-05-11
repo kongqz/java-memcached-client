@@ -12,7 +12,12 @@ public abstract class ClientBaseCase extends TestCase {
 	protected MemcachedClientWithTranscoder client = null;
 
 	protected void initClient() throws Exception {
-		initClient(new DefaultConnectionFactory());
+		initClient(new DefaultConnectionFactory() {
+			@Override
+			public long getOperationTimeout() {
+				return 15000;
+			}
+		});
 	}
 
 	protected void initClient(ConnectionFactory cf) throws Exception {
