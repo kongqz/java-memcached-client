@@ -342,13 +342,23 @@ public interface MemcachedClient {
 	/**
 	 * Delete the given key from the cache.
 	 *
+	 * <p>
+	 * The hold argument specifies the amount of time in seconds (or Unix time
+	 * until which) the client wishes the server to refuse "add" and "replace"
+	 * commands with this key. For this amount of item, the item is put into a
+	 * delete queue, which means that it won't possible to retrieve it by the
+	 * "get" command, but "add" and "replace" command with this key will also
+	 * fail (the "set" command will succeed, however). After the time passes,
+	 * the item is finally deleted from server memory.
+	 * </p>
+	 *
 	 * @param key the key to delete
-	 * @param when when the deletion should take effect
+	 * @param hold how long the key should be unavailable to add commands
 	 */
-	Future<Boolean> delete(String key, int when);
+	Future<Boolean> delete(String key, int hold);
 
 	/**
-	 * Shortcut to delete that will immediately delete the item from the cache.
+	 * Shortcut to delete that doesn't put a hold on the key.
 	 */
 	Future<Boolean> delete(String key);
 
