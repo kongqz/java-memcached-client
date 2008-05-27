@@ -116,7 +116,7 @@ abstract class OperationImpl extends BaseOperationImpl {
 		// Now process the payload if we can.
 		if(headerOffset >= MIN_RECV_PACKET && payload == null) {
 			finishedPayload(EMPTY_BYTES);
-		} else {
+		} else if(payload != null) {
 			int toRead=payload.length - payloadOffset;
 			int available=b.remaining();
 			toRead=Math.min(toRead, available);
@@ -128,6 +128,10 @@ abstract class OperationImpl extends BaseOperationImpl {
 			if(payloadOffset == payload.length) {
 				finishedPayload(payload);
 			}
+		} else {
+			// Haven't read enough to make up a payload.  Must read more.
+			getLogger().debug("Only read %d of the %d needed to fill a header",
+				headerOffset, MIN_RECV_PACKET);
 		}
 
 	}
